@@ -3,7 +3,7 @@ import { useState } from "react";
 const NoteState = (props) => {
     const notesInitial=[
         {
-          "_id": "61d48906d856345900f40b8e",
+          "_id": "61d48906d8526345900f40b8e",
           "user": "61ce01d69bc828b8269548cb",
           "title": "new Note",
           "description": "Work hard everyday",
@@ -12,7 +12,7 @@ const NoteState = (props) => {
           "__v": 0
         },
         {
-          "_id": "61d48906d856345900f40b90",
+          "_id": "61d4890226d856345900f40b90",
           "user": "61ce01d69bc828b8269548cb",
           "title": "new Note",
           "description": "Work hard everyday",
@@ -21,7 +21,7 @@ const NoteState = (props) => {
           "__v": 0
         },
         {
-          "_id": "61d48906d856345900f40b8e",
+          "_id": "61d48906d8563459002f40b8e",
           "user": "61ce01d69bc828b8269548cb",
           "title": "new Note",
           "description": "Work hard everyday",
@@ -30,7 +30,7 @@ const NoteState = (props) => {
           "__v": 0
         },
         {
-          "_id": "61d48906d856345900f40b90",
+          "_id": "61d48906d856345900f4022b90",
           "user": "61ce01d69bc828b8269548cb",
           "title": "new Note",
           "description": "Work hard everyday",
@@ -39,7 +39,7 @@ const NoteState = (props) => {
           "__v": 0
         },
         {
-          "_id": "61d48906d856345900f40b8e",
+          "_id": "61d48906d85632245900f40b8e",
           "user": "61ce01d69bc828b8269548cb",
           "title": "new Note",
           "description": "Work hard everyday",
@@ -48,7 +48,7 @@ const NoteState = (props) => {
           "__v": 0
         },
         {
-          "_id": "61d48906d856345900f40b90",
+          "_id": "61d48906d856345900f4220b90",
           "user": "61ce01d69bc828b8269548cb",
           "title": "new Note",
           "description": "Work hard everyday",

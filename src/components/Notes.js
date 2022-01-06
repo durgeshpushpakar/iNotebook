@@ -8,7 +8,7 @@ export default function Notes() {
         <div className="row">
             <h2 className="my-3">Your Notes</h2>
             {notes.map((e) => {
-                return <NoteItem note={e}/>
+                return <NoteItem key={e._id} note={e}/>
             })
             }
         </div>
