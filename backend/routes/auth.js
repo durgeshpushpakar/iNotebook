@@ -4,7 +4,7 @@ const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 let bcrypt = require("bcryptjs");
 let jwt = require("jsonwebtoken");
-let fetchuser=require("../middleware/fetchuser")
+let fetchuser = require("../middleware/fetchuser")
 const JWT_SECRET = "durgeshisagoodbo$y";
 
 // sign up route
@@ -60,6 +60,7 @@ router.post(
   body("email", "enter a valid email").isEmail(),
   body("password", "password cannot be blank").exists(),
   async (req, res) => {
+    let success=false;
     // if there are errors then return bad request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -76,9 +77,8 @@ router.post(
 
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!passwordCompare) {
-        return res
-          .status(400)
-          .json({ error: "try to login with correct credentials!" });
+        success=false;
+        return res.status(400).json({success, error: "try to login with correct credentials!" });
       }
       const data = {
         user: {
@@ -86,7 +86,8 @@ router.post(
         },
       };
       const authToken = jwt.sign(data, JWT_SECRET);
-      res.json({ authToken });
+      success=true;
+      res.json({success, authToken });
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Internal server error!");

@@ -75,7 +75,7 @@ const addNote = async (title, description, tag) => {
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
-      body: JSON.stringify({title, description, tag}),
+      body: JSON.stringify({title, description, tag})
     });
     // const json = response.json();
 	let newNotes= JSON.parse(JSON.stringify(notes));
