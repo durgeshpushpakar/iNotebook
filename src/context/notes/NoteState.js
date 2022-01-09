@@ -42,17 +42,7 @@ const addNote = async (title, description, tag) => {
       referrerPolicy: "no-referrer",
       body: JSON.stringify({title, description, tag}),
     });
-    const json = response.json();
-
-    const note = {
-      _id: "61d48906d8526345900f401b8e",
-      user: "61ce01d69bc828b8269548cb",
-      title: title,
-      description: description,
-      tag: tag,
-      date: "2022-01-04T17:51:02.453Z",
-      __v: 0,
-    };
+    const note = await response.json();
     setNotes(notes.concat(note));
 };
 
@@ -67,7 +57,6 @@ const addNote = async (title, description, tag) => {
         "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFjZTAxZDY5YmM4MjhiODI2OTU0OGNiIn0sImlhdCI6MTY0MTIwNjgwMn0.F01VlF33AktkUSlbGT_SFPy7T9mM0U6X68bUdQcsZmc",
       }
     });
-    console.log("deleting the note with id" + id);
     const newNotes = notes.filter((note) => {
       return note._id !== id;
     });
@@ -79,7 +68,7 @@ const addNote = async (title, description, tag) => {
     // API CALL
     const url = `${host}/api/notes/updatenote/${id}`;
     const response = await fetch(url, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFjZTAxZDY5YmM4MjhiODI2OTU0OGNiIn0sImlhdCI6MTY0MTIwNjgwMn0.F01VlF33AktkUSlbGT_SFPy7T9mM0U6X68bUdQcsZmc",
@@ -88,18 +77,20 @@ const addNote = async (title, description, tag) => {
       referrerPolicy: "no-referrer",
       body: JSON.stringify({title, description, tag}),
     });
-    const json = response.json();
-
-    // logic to edit in client
-    for (let i = 0; i < notes.length; i++) {
-      const e = notes[i];
-      if (e === id) {
-        e.title = title;
-        e.description = description;
-        e.tag = tag;
+    // const json = response.json();
+	let newNotes= JSON.parse(JSON.stringify(notes));
+    // logic to edit in client side
+    for (let i = 0; i < newNotes.length; i++) {
+      const e = newNotes[i];
+      if (e._id === id) {
+        newNotes[i].title = title;
+        newNotes[i].description = description;
+        newNotes[i].tag = tag;
+		break;
       }
     }
-  };
+	setNotes(newNotes);
+  }
   return (
     <NoteContext.Provider
       value={{ notes, setNotes, addNote, deleteNote, editNote, getNotes }}
