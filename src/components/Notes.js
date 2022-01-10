@@ -1,13 +1,20 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import noteContext from "../context/notes/noteContext";
 import AddNote from "./AddNote";
 import NoteItem from "./NoteItem";
-export default function Notes() {
-    // getting all notes using context api hook 
+export default function Notes(props) {
+  // getting all notes using context api hook 
   const context = useContext(noteContext);
   const { notes, getNotes, editNote } = context;
+  const navigate=useNavigate();
   useEffect(() => {
-    getNotes();
+    if(localStorage.getItem('token')){
+      getNotes();
+    }
+    else{
+      navigate('/login')
+    }
     // eslint-disable-next-line
   }, []);
   const ref = useRef(null);
@@ -23,13 +30,14 @@ export default function Notes() {
         e.preventDefault();
         editNote(note.id, note.etitle, note.edescription, note.etag);
         refClose.current.click();
+        props.showAlert("updated successfully", "success")
     }
     const onChange = (e) => {
         setNote({...note, [e.target.name]:e.target.value});
     }
     return (
     <>
-      <AddNote />
+      <AddNote showAlert={props.showAlert}/>
 
       {/* MODAL  */}
       
@@ -77,7 +85,7 @@ export default function Notes() {
         <h2 className="my-3 container">Your Notes</h2>
         {notes.length===0 && 'No Notes to display'}
         {notes.map((e) => {
-            return <NoteItem key={e._id} updateNote={updateNote} note={e} />;
+            return <NoteItem key={e._id} updateNote={updateNote} note={e} showAlert={props.showAlert}/>;
         })}
       </div>
     </>
