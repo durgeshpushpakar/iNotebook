@@ -16,19 +16,22 @@ router.post(
   body("name").isLength({ min: 3 }),
   body("password").isLength({ min: 5 }),
   async (req, res) => {
+    let success=false;
     // if there are errors then return bad request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      success=false;
+      return res.status(400).json({success, errors: errors.array() });
     }
 
     try {
       // check whether the user with the same email exists already
       let user = await User.findOne({ email: req.body.email });
       if (user) {
+        success=false;
         return res
           .status(400)
-          .json({ error: "sorry this email is already registered!" });
+          .json({success, error: "sorry this email is already registered!" });
       }
       // hashing the password using bcrypt
       const salt = await bcrypt.genSalt(10);
@@ -46,7 +49,8 @@ router.post(
       const authToken = jwt.sign(data, JWT_SECRET);
       // console.log(authToken);
       // console.log(user)
-      res.json({ authToken });
+      success=true;
+      res.json({ success, authToken });
     } catch (err) {
       console.log(err.message);
     }
